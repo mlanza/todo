@@ -27,3 +27,8 @@ input.entry {
 .todo-list li label, input.entry {
   font-weight: 300;
 }
+:focus,
+.toggle:focus + label,
+.toggle-all:focus + label {
+	box-shadow: none;
+}
