@@ -42,13 +42,13 @@ _.each(function(el){
   $.sub($state, _.log);
 
   $.sub($state, function(state){
-    const todos = _.thread(state, _.get(_, "todo"), state.view === "all" ? _.identity : _.filter(function(item){
+    const todos = _.chain(state, _.get(_, "todo"), state.view === "all" ? _.identity : _.filter(function(item){
       return item.status === state.view;
     }, _),  _.map(function(item){
       return _.doto(li({"data-id": item.id}, todoItem(item)), dom.toggleClass(_, "completed", item.status === "completed"));
     }, _));
-    const active = _.thread(state, _.get(_, "todo"), v.active, _.count);
-    const total = _.thread(state, _.get(_, "todo"), _.count);
+    const active = _.chain(state, _.get(_, "todo"), v.active, _.count);
+    const total = _.chain(state, _.get(_, "todo"), _.count);
     all.checked = active === total;
     dom.html(count, active);
     dom.html(list, todos);

@@ -10,7 +10,7 @@ export function selectView(view){
 
 export function init(){
   return {
-    view: "All",
+    view: "all",
     next: 3,
     todo: [
       {id: 1, title: "Buy milk", status: "active"},
@@ -27,7 +27,7 @@ function todo(id, title){
 export function addTodo(title){
   return function(state){
     const id = _.get(state, "next");
-    return _.thread(state,
+    return _.chain(state,
       _.update(_, "todo", _.conj(_, todo(id, title))),
       _.assoc(_, "next", id + 1));
   }
