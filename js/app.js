@@ -26,6 +26,7 @@ function todoItem(item){
 _.each(function(el){
   const entry = dom.sel1(".new-todo", el),
         list = dom.sel1(".todo-list"),
+        filters = dom.sel1(".filters"),
         count = dom.sel1(".todo-count strong");
   const $state = $.cell(v.init());
 
@@ -53,6 +54,9 @@ _.each(function(el){
     }
   });
   $.sub(dom.hash(window), function(hash){
+    const views = dom.sel("a", filters);
+    _.each(dom.removeClass(_, "selected"), views);
+    dom.addClass(dom.sel1(`a[href='${hash}']`), "selected");
     _.swap($state, v.selectView(hash.replace("#/", "") || "all"));
   })
   $.on(el, "click", "button.destroy", function(e){
