@@ -1,21 +1,10 @@
 import _ from "./lib/@atomic/core.js";
 
-const views = ["all", "active", "completed"];
-
-export function selectView(view){
-  return function(state){
-    return _.includes(views, view) ? _.assoc(state, "view", view) : state;
-  }
-}
-
 export function init(){
   return {
     view: "all",
-    next: 3,
-    todo: [
-      {id: 1, title: "Buy milk", status: "active"},
-      {id: 2, title: "Read Awake & Alive to Truth ~ J. Cooper", status: "active"}
-    ]
+    next: 1,
+    todo: []
   }
 }
 
@@ -64,4 +53,12 @@ export function toggle(state){
           return _.get(item, "status") === "completed";
         }, todo));
   return _.assoc(state, "todo", _.mapa(_.assoc(_, "status", completed !== total ? "completed" : "active"), todo));
+}
+
+const views = ["all", "active", "completed"];
+
+export function selectView(view){
+  return function(state){
+    return _.includes(views, view) ? _.assoc(state, "view", view) : state;
+  }
 }
