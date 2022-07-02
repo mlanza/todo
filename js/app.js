@@ -34,6 +34,11 @@ _.each(function(el){
         all = dom.sel1("#toggle-all");
   const $state = $.cell(v.init());
 
+  function doneEditing(e){
+    dom.removeClass(_.closest(e.target, "[data-id]"), "editing");
+    _.swap($state, v.updateTodo(getId(e.target), "title", dom.value(e.target)));
+  }
+
   $.sub($state, _.log);
 
   $.sub($state, function(state){
@@ -56,12 +61,12 @@ _.each(function(el){
     tb.focus();
   });
 
-  $.on(el, "focusout", "[data-id].editing input.entry", function(e){
-    //if (e.keyCode === 9){
-      dom.removeClass(_.closest(e.target, "[data-id]"), "editing");
-      _.swap($state, v.updateTodo(getId(e.target), "title", dom.value(e.target)));
-    //}
-  })
+  $.on(el, "focusout", "[data-id].editing input.entry", doneEditing)
+  $.on(el, "keydown", "[data-id].editing input.entry", function(e){
+    if (e.keyCode === 13){
+      doneEditing(e);
+    }
+  });
 
   $.on(el, "change", "#toggle-all", function(e){
     _.swap($state, v.toggle);
@@ -77,7 +82,8 @@ _.each(function(el){
       this.value = "";
     }
   });
-  $.sub(dom.hash(window), function(hash){
+  $.sub(dom.hash(window), function(h){
+    const hash = h || "#/";
     const views = dom.sel("a", filters);
     _.each(dom.removeClass(_, "selected"), views);
     dom.addClass(dom.sel1(`a[href='${hash}']`), "selected");
