@@ -49,10 +49,10 @@ export function clearCompleted(state){
   return _.update(state, "todo", active);
 }
 
-export function updateTodoStatus(id, status){
+export function updateTodo(id, key, value){
   return function(state){
     return _.update(state, "todo", _.mapa(function(item){
-      return _.get(item, "id") === id ? _.assoc(item, "status", status) : item;
+      return _.get(item, "id") === id ? _.assoc(item, key, value) : item;
     }, _));
   }
 }
@@ -60,8 +60,8 @@ export function updateTodoStatus(id, status){
 export function toggle(state){
   const todo = _.get(state, "todo"),
         total = _.count(todo),
-        active = _.count(_.filter(function(item){
-          return _.get(item, "status") === "active";
+        completed = _.count(_.filter(function(item){
+          return _.get(item, "status") === "completed";
         }, todo));
-  return _.mapa(_.assoc(_, "status", total === active ? "completed" : "active"), todo);
+  return _.assoc(state, "todo", _.mapa(_.assoc(_, "status", completed !== total ? "completed" : "active"), todo));
 }
