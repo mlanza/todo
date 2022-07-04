@@ -1,6 +1,7 @@
 import _ from "./lib/@atomic/core.js";
 import $ from "./lib/@atomic/reactives.js";
 import dom from "./lib/@atomic/dom.js";
+import t from "./lib/@atomic/transducers.js";
 import * as v from "./todos.js";
 
 const li = dom.tag('li'),
@@ -30,9 +31,11 @@ _.each(function(el){
   const entry = dom.sel1(".new-todo", el),
         list = dom.sel1(".todo-list"),
         filters = dom.sel1(".filters"),
+        views = dom.sel("a", filters),
         count = dom.sel1(".todo-count strong"),
         all = dom.sel1("#toggle-all");
   const $state = $.cell(v.init()),
+        $hash = dom.hash(window),
         $todo = $.map(_.get(_, "todo"), $state),
         $shown = $.map(v.shown, $state),
         $active = $.map(_.pipe(v.active, _.count), $todo),
@@ -45,9 +48,7 @@ _.each(function(el){
   }
 
   $.sub($state, _.log);
-  $.sub(dom.hash(window), function(h){
-    const hash = h || "#/";
-    const views = dom.sel("a", filters);
+  $.sub($hash, t.map(_.either(_, "#/")), function(hash){
     _.each(dom.removeClass(_, "selected"), views);
     dom.addClass(dom.sel1(`a[href='${hash}']`), "selected");
     _.swap($state, v.selectView(hash.replace("#/", "") || "all"));
