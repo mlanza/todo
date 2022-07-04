@@ -55,6 +55,12 @@ export function toggle(state){
   return _.assoc(state, "todo", _.mapa(_.assoc(_, "status", completed !== total ? "completed" : "active"), todo));
 }
 
+export function shown(state){
+  return state.view === "all" ? state.todo : _.filtera(function(item){
+    return item.status === state.view;
+  }, state.todo);
+}
+
 const views = ["all", "active", "completed"];
 
 export function selectView(view){
