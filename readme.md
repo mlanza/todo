@@ -8,7 +8,10 @@
 
 ## Implementation
 
-To model an atomic app follow [this advice](https://github.com/mlanza/atomic#guidance-for-writing-apps).
+Atomic apps build on [this advice](https://github.com/mlanza/atomic#guidance-for-writing-apps).  This is demonstrated in the separation of
+
+* its [functional core](./js/todos.js) and
+* its [imperative shell](./js/app.js).
 
 ## Getting Started
 
@@ -19,11 +22,17 @@ npm install
 static # e.g. bring up the static server of your choice
 ```
 
-Then open your browser to the server address shown in the shell to see the app.  Open the browser console in Developer Tools.  Note what's being written to the log as you interact with the app.  Read the comments in the app source.
+Then open your browser to the server address shown in the shell to see the app.
 
-Interact with whatever vars have been deliberately exposed as globals.  Temporarily expose whichever others you choose.  Type `$state` in the console, for example, to access the world state.  Swap functions against it at will.  This is your REPL.
+## Browser as REPL
 
-To gain direct access a slew of commands type `cmd()`.  This will expose all the modules as `_`, `$`, `dom`, `t`, etc. in the global namespace and facilitate interactive development.
+Open the browser console in Developer Tools.  Note what's being written to the log as you interact with the app.
+
+Temporarily and deliberately expose whichever vars you choose as globals.  Do this to facilitate interactive, REPL-driven development.
+
+Enter `$state` into the console, for example, to access the world state.  Swap functions against it at will.
+
+Enter `cmd()` to expose all the modules as `_`, `$`, `dom`, `t`, etc. in the global namespace as needed to further aid your interactivity.
 
 ## Credit
 
