@@ -34,6 +34,7 @@ function todoItem(item){
 // install app on matching elements, usually just one
 _.each(function(el){
 
+  //locate key elements
   const entry = dom.sel1(".new-todo", el),
         list = dom.sel1(".todo-list"),
         filters = dom.sel1(".filters"),
@@ -41,6 +42,7 @@ _.each(function(el){
         count = dom.sel1(".todo-count strong"),
         all = dom.sel1("#toggle-all");
 
+  //define the required reactives
   const $state = $.cell(v.init()),
         $hash = dom.hash(window),
         $todo = $.map(_.get(_, "todo"), $state), //underscore is a partial application placeholder, note the other places this happens too

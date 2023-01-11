@@ -8,18 +8,22 @@
 
 ## Implementation
 
-To model an atomic app follow [this advice](https://github.com/mlanza/atomic#guidance-for-writing-apps).  This todo app can be served
+To model an atomic app follow [this advice](https://github.com/mlanza/atomic#guidance-for-writing-apps).
 
 ## Getting Started
 
-From the command line:
+From the command line project root:
 
 ```bash
 npm install
-static
+static # e.g. bring up the static server of your choice
 ```
 
-Bring up the browser console and mind the log.  If desired, type `cmd()` to gain direct access to the Atomic modules.  If portions of an app are deliberately exposed, one can interact with it, live.
+Then open your browser to the server address shown in the shell to see the app.  Open the browser console in Developer Tools.  Note what's being written to the log as you interact with the app.  Read the comments in the app source.
+
+Interact with whatever vars have been deliberately exposed as globals.  Temporarily expose whichever others you choose.  Type `$state` in the console, for example, to access the world state.  Swap functions against it at will.  This is your REPL.
+
+To gain direct access a slew of commands type `cmd()`.  This will expose all the modules as `_`, `$`, `dom`, `t`, etc. in the global namespace and facilitate interactive development.
 
 ## Credit
 
