@@ -1,5 +1,8 @@
 import _ from "./lib/atomic_/core.js";
 
+//the functional core where functions are pure
+
+//big bang world state
 export function init(){
   return {
     view: "all",
@@ -8,11 +11,13 @@ export function init(){
   }
 }
 
+//create a todo
 function todo(id, title){
   const status = "active";
   return {id, title, status};
 }
 
+//graft it into the todo list
 export function addTodo(title){
   return function(state){
     const id = _.get(state, "next");
@@ -22,6 +27,7 @@ export function addTodo(title){
   }
 }
 
+//remove a todo from the list
 export function removeTodo(id){
   return function(state){
     return _.update(state, "todo", _.filtera(function(item){
@@ -30,14 +36,17 @@ export function removeTodo(id){
   }
 }
 
+//filter out completed todos, keeping only unfinished ones active
 export const active =  _.filtera(function(item){
   return _.get(item, "status") !== "completed";
 }, _);
 
+//apply the active filter against the app state
 export function clearCompleted(state){
   return _.update(state, "todo", active);
 }
 
+//update a todo per some user edit
 export function updateTodo(id, key, value){
   return function(state){
     return _.update(state, "todo", _.mapa(function(item){
@@ -46,6 +55,7 @@ export function updateTodo(id, key, value){
   }
 }
 
+//toggle the todo status
 export function toggle(state){
   const todo = _.get(state, "todo"),
         total = _.count(todo),
@@ -55,6 +65,7 @@ export function toggle(state){
   return _.assoc(state, "todo", _.mapa(_.assoc(_, "status", completed !== total ? "completed" : "active"), todo));
 }
 
+//can the todo be seen?
 export function shown(state){
   return state.view === "all" ? state.todo : _.filtera(function(item){
     return item.status === state.view;
@@ -63,6 +74,7 @@ export function shown(state){
 
 const views = ["all", "active", "completed"];
 
+//choose the desired view
 export function selectView(view){
   return function(state){
     return _.includes(views, view) ? _.assoc(state, "view", view) : state;
