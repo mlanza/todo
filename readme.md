@@ -24,6 +24,8 @@ static # e.g. bring up the static server of your choice
 
 Then open your browser to the server address shown in the shell to see the app.
 
+See [demo](https://doesideas.com/programming/todo/).
+
 ## Browser as REPL
 
 Open the browser console in Developer Tools.  Note what's being written to the log as you interact with the app.
