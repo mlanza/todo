@@ -1,4 +1,4 @@
-import _ from "./lib/atomic_/core.js"; //the trailing underscore in `atomic_` signifies functions are wrapped for build-free partial application
+import _ from "./lib/atomic_/core.js"; //shadow modules (see how some names have trailing underscores) support partial application without a build step
 import $ from "./lib/atomic_/reactives.js";
 import dom from "./lib/atomic_/dom.js"; //includes its own reactives
 import t from "./lib/atomic_/transducers.js";
@@ -43,7 +43,7 @@ _.maybe(dom.sel1("#todoapp"), function(el){
   //setup necessary reactives
   const $state = $.cell(v.init()),
         $hash = dom.hash(window),
-        $todo = $.map(_.get(_, "todo"), $state), //underscore is a partial application placeholder, note the other places this happens too
+        $todo = $.map(_.get(_, "todo"), $state), //note the regular use of _ as a partial application placeholder, no build step required
         $shown = $.map(v.shown, $state),
         $active = $.map(_.pipe(v.active, _.count), $todo),
         $total = $.map(_.count, $todo),
