@@ -5,7 +5,7 @@ export function init(){
   return {
     view: "all",
     next: 1,
-    todo: []
+    todo: [] //CHALLENGE: rewrite using an indexed `{}` to increase performance with lots of to-dos
   }
 }
 
