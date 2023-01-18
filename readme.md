@@ -19,7 +19,7 @@ From the command line project root:
 
 ```bash
 npm install
-static # e.g. bring up the static server of your choice
+static # e.g. launch the static server of your choice
 ```
 
 Then open your browser to the server address shown in the shell to see the app.
@@ -30,11 +30,11 @@ See [demo](https://doesideas.com/programming/todo/).
 
 Open the browser console in Developer Tools.  Note what's being written to the log as you interact with the app.
 
-Temporarily and deliberately expose whichever vars you choose as globals.  Do this to facilitate interactive, REPL-driven development.
+Temporarily expose choice vars as globals to facilitate interactive, REPL-driven development.
 
-Enter `$state` into the console, for example, to access the world state.  Swap functions against it at will.
+Enter `$state` into the console, for example, to access the world state.  Swap updates against it as desired.
 
-Enter `cmd()` to expose all the modules as `_`, `$`, `dom`, `t`, etc. in the global namespace as needed to further aid your interactivity.
+Enter `cmd()` to expose all the modules as `_`, `$`, `dom`, `t`, etc. in the global namespace to further aid your interactivity.
 
 ## Credit
 

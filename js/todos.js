@@ -1,7 +1,5 @@
 import _ from "./lib/atomic_/core.js";
 
-//the functional core where functions are pure
-
 //big bang world state
 export function init(){
   return {
@@ -29,11 +27,9 @@ export function addTodo(title){
 
 //remove a todo from the list
 export function removeTodo(id){
-  return function(state){
-    return _.update(state, "todo", _.filtera(function(item){
-      return _.get(item, "id") !== id;
-    }, _));
-  }
+  return _.update(_, "todo", _.filtera(function(item){
+    return _.get(item, "id") !== id;
+  }, _));
 }
 
 //filter out completed todos, keeping only unfinished ones active
@@ -42,17 +38,14 @@ export const active =  _.filtera(function(item){
 }, _);
 
 //apply the active filter against the app state
-export function clearCompleted(state){
-  return _.update(state, "todo", active);
-}
+export const clearCompleted =
+  _.update(_, "todo", active);
 
 //update a todo per some user edit
 export function updateTodo(id, key, value){
-  return function(state){
-    return _.update(state, "todo", _.mapa(function(item){
-      return _.get(item, "id") === id ? _.assoc(item, key, value) : item;
-    }, _));
-  }
+  return _.update(_, "todo", _.mapa(function(item){
+    return _.get(item, "id") === id ? _.assoc(item, key, value) : item;
+  }, _));
 }
 
 //toggle the todo status
