@@ -13,6 +13,8 @@ Atomic apps build on [this advice](https://github.com/mlanza/atomic#guidance-for
 * its [functional core](./js/todos.js) and
 * its [imperative shell](./js/app.js).
 
+User interactions such as adding tasks effect abrupt changes to the UI.  Graceful animations are possible but slightly increase the implementation complexity.
+
 ## Getting Started
 
 From the command line project root:
