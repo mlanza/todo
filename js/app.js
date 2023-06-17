@@ -1,15 +1,10 @@
 import _ from "./lib/atomic_/core.js"; //shadow modules (see how some names have trailing underscores) support partial application without a build step
 import $ from "./lib/atomic_/reactives.js";
 import dom from "./lib/atomic_/dom.js"; //includes its own reactives
-import t from "./lib/atomic_/transducers.js";
 import * as v from "./todos.js"; // grab the functional core, "v" for virtual
 
-//prepare to create elements
-const li = dom.tag('li'),
-      label = dom.tag('label'),
-      input = dom.tag('input'),
-      div = dom.tag('div'),
-      button = dom.tag('button'),
+//create what elements?
+const {li, label, input, div, button} = dom.tags(['li','label','input','div','button']),
       checkbox = dom.tag('input', {class: "toggle", type: "checkbox"});
 
 function getId(el){
@@ -31,6 +26,7 @@ function todoItem(item){
 
 // locate potentially matching element
 _.maybe(dom.sel1("#todoapp"), function(el){
+  dom.addClass(el, "todoapp");
 
   //locate fixed, relative elements
   const entry = dom.sel1(".new-todo", el),
@@ -59,7 +55,7 @@ _.maybe(dom.sel1("#todoapp"), function(el){
   $.sub($state, _.log); //facilitates interactive development/debugging
 
   //subscribe to reactives
-  $.sub($hash, t.map(_.either(_, "#/")), function(hash){
+  $.sub($hash, _.map(_.either(_, "#/")), function(hash){
     _.each(dom.removeClass(_, "selected"), views);
     dom.addClass(dom.sel1(`a[href='${hash}']`), "selected");
     _.swap($state, v.selectView(hash.replace("#/", "") || "all"));
