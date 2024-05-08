@@ -4,8 +4,14 @@ import dom from "./lib/atomic_/dom.js"; //includes its own reactives
 import * as v from "./todos.js"; // grab the functional core, "v" for virtual
 
 //create what elements?
-const {li, label, input, div, button} = dom.tags(['li','label','input','div','button']),
-      checkbox = dom.tag('input', {class: "toggle", type: "checkbox"});
+const {li, label, input, div, button, checkbox} = dom.tags([
+  'li',
+  'label',
+  'input',
+  'div',
+  'button',
+  'checkbox', ['input', {class: "toggle", type: "checkbox"}]
+]);
 
 function getId(el){
   const todo = _.closest(el, "li");
