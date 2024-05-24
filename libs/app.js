@@ -1,7 +1,8 @@
-import _ from "./lib/atomic_/core.js"; //shadow modules (see how some names have trailing underscores) support partial application without a build step
-import $ from "./lib/atomic_/reactives.js";
-import dom from "./lib/atomic_/dom.js"; //includes its own reactives
-import * as v from "./todos.js"; // grab the functional core, "v" for virtual
+import _ from "./atomic_/core.js"; //shadow modules (see how some names have trailing underscores) support partial application without a build step
+import $ from "./atomic_/shell.js";
+import dom from "./atomic_/dom.js"; //includes its own reactives
+import * as t from "./todos.js"; // functional core, named "t" for the domain
+import {reg} from "./cmd.js"
 
 //create what elements?
 const {li, label, input, div, button, checkbox} = dom.tags([
@@ -43,32 +44,30 @@ _.maybe(dom.sel1("#todoapp"), function(el){
         all = dom.sel1("#toggle-all");
 
   //setup necessary reactives
-  const $state = $.cell(v.init()),
+  const $state = $.atom(t.init()),
         $hash = dom.hash(window),
         $todo = $.map(_.get(_, "todo"), $state), //note the regular use of _ as a partial application placeholder, no build step required
-        $shown = $.map(v.shown, $state),
-        $active = $.map(_.pipe(v.active, _.count), $todo),
+        $shown = $.map(t.shown, $state),
+        $active = $.map(_.pipe(t.active, _.count), $todo),
         $total = $.map(_.count, $todo),
         $nothingDone = $.map(_.eq, $active, $total);
 
-  Object.assign(window, {$state}); //trick for temporarily exposing choice objects for interactive, REPL-driven development
+  reg({t, $state, $todo, $shown, $active, $total, $nothingDone}); //trick for temporarily exposing choice objects for interactive, REPL-driven development
 
   function doneEditing(e){
     dom.removeClass(_.closest(e.target, "[data-id]"), "editing");
-    _.swap($state, v.updateTodo(getId(e.target), "title", dom.value(e.target)));
+    $.swap($state, t.updateTodo(getId(e.target), "title", dom.value(e.target)));
   }
-
-  $.sub($state, _.log); //facilitates interactive development/debugging
 
   //subscribe to reactives
   $.sub($hash, _.map(_.either(_, "#/")), function(hash){
-    _.each(dom.removeClass(_, "selected"), views);
+    $.each(dom.removeClass(_, "selected"), views);
     dom.addClass(dom.sel1(`a[href='${hash}']`), "selected");
-    _.swap($state, v.selectView(hash.replace("#/", "") || "all"));
+    $.swap($state, t.selectView(hash.replace("#/", "") || "all"));
   });
   $.sub($shown, function(shown){
     dom.html(list, _.map(function(item){
-      return _.doto(li({"data-id": item.id}, todoItem(item)), dom.toggleClass(_, "completed", item.status === "completed"));
+      return $.doto(li({"data-id": item.id}, todoItem(item)), dom.toggleClass(_, "completed", item.status === "completed"));
     }, shown));
   });
   $.sub($active, dom.html(count, _));
@@ -88,21 +87,21 @@ _.maybe(dom.sel1("#todoapp"), function(el){
     }
   });
   $.on(el, "change", "#toggle-all", function(e){
-    _.swap($state, v.toggle);
+    $.swap($state, t.toggle);
   });
   $.on(el, "click", ".clear-completed", function(e){
-    _.swap($state, v.clearCompleted);
+    $.swap($state, t.clearCompleted);
   });
   $.on(entry, "keydown", function(e){
     if (e.keyCode === 13){
-      _.swap($state, v.addTodo(this.value));
+      $.swap($state, t.addTodo(this.value));
       this.value = "";
     }
   });
   $.on(el, "click", "button.destroy", function(e){
-    _.swap($state, v.removeTodo(getId(e.target)));
+    $.swap($state, t.removeTodo(getId(e.target)));
   });
   $.on(el, "change", "li[data-id] input[type='checkbox']", function(e){
-    _.swap($state, v.updateTodo(getId(e.target), "status", e.target.checked ? "completed" : "active"));
+    $.swap($state, t.updateTodo(getId(e.target), "status", e.target.checked ? "completed" : "active"));
   });
 });
