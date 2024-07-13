@@ -82,7 +82,7 @@ _.maybe(dom.sel1("#todoapp"), function(el){
   });
   $.on(el, "focusout", "[data-id].editing input.entry", doneEditing);
   $.on(el, "keydown", "[data-id].editing input.entry", function(e){
-    if (e.keyCode === 13){
+    if (e.key === "Enter"){
       doneEditing(e);
     }
   });
@@ -93,7 +93,7 @@ _.maybe(dom.sel1("#todoapp"), function(el){
     $.swap($state, t.clearCompleted);
   });
   $.on(entry, "keydown", function(e){
-    if (e.keyCode === 13){
+    if (e.key === "Enter"){
       $.swap($state, t.addTodo(this.value));
       this.value = "";
     }
