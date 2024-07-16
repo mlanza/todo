@@ -1,4 +1,4 @@
-import _ from "./atomic_/core.js";
+import _ from "./libs/atomic_/core.js";
 
 //big bang world state
 export function init(){
