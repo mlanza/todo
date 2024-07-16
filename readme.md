@@ -26,7 +26,7 @@ static # e.g. launch the static server of your choice
 
 Then open your browser to the server address shown in the shell to see the app.
 
-See [demo](https://doesideas.com/programming/todo/?monitor=*).
+See [demo](https://doesideas.com/todo/?monitor=*).
 
 ## Browser as an interactive console
 
