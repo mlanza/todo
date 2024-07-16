@@ -1,8 +1,8 @@
-import _ from "./atomic_/core.js"; //shadow modules (see how some names have trailing underscores) support partial application without a build step
-import $ from "./atomic_/shell.js";
-import dom from "./atomic_/dom.js"; //includes its own reactives
-import * as t from "./todos.js"; // functional core, named "t" for the domain
-import {reg} from "./cmd.js"
+import _ from "./libs/atomic_/core.js"; //shadow modules (see how some names have trailing underscores) support partial application without a build step
+import $ from "./libs/atomic_/shell.js";
+import dom from "./libs/atomic_/dom.js"; //includes its own reactives
+import {reg} from "./libs/cmd.js"
+import * as t from "./todo.js"; // functional core, named "t" for the domain
 
 //create what elements?
 const {li, label, input, div, button, checkbox} = dom.tags([
