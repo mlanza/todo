@@ -5,14 +5,12 @@ import {reg} from "./libs/cmd.js"
 import * as t from "./todo.js"; // functional core, named "t" for the domain
 
 //create what elements?
-const {li, label, input, div, button, checkbox} = dom.tags([
-  'li',
-  'label',
-  'input',
-  'div',
-  'button',
-  'checkbox', ['input', {class: "toggle", type: "checkbox"}]
-]);
+const li = dom.tag("li"),
+      label = dom.tag("label"),
+      input = dom.tag("input"),
+      div = dom.tag("div"),
+      button = dom.tag("button"),
+      checkbox = dom.tag("input", {class: "toggle", type: "checkbox"});
 
 function getId(el){
   const todo = _.closest(el, "li");
