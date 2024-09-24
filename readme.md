@@ -26,7 +26,7 @@ static # e.g. launch the static server of your choice
 
 Then open your browser to the server address shown in the shell to see the app.
 
-See [demo](https://doesideas.com/todo/?monitor=*).
+See [demo](https://mlanza.com/todo/?monitor=*).
 
 ## Browser as an interactive console
 
@@ -36,4 +36,4 @@ Enter `$state` into the console, for example, to access the world state.  Swap u
 
 ## Credit
 
-Created by [Mario T. Lanza](http://doesideas.com)
+Created by [Mario T. Lanza](http://mlanza.com)
